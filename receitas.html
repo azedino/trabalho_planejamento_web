@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Receitas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body onload="preencheCatalogo()">
+  <div class="container-fluid bg-warning">
+    <h1 class="text-center py-4">Catálogo de Receitas</h1>
+    <div id="pnlCatalogo" class="d-flex flex-wrap justify-content-center gap-3 px-3 pb-4"></div>
+  </div>
+
+  <script>
+    const receitas = [{
+                titulo: "Bolo de Cenoura",
+                imagem: "imagens/bolo_cenoura.png",
+                preparo: "Misture todos os ingredientes, asse por 40 minutos e sirva com cobertura de chocolate.",
+                ingredientes: [
+                    "3 cenouras médias",
+                    "4 ovos",
+                    "1 xícara de óleo",
+                    "2 xícaras de açúcar",
+                    "2 e 1/2 xícaras de farinha de trigo",
+                    "1 colher de sopa de fermento em pó"
+                ]
+            },
+            {
+                titulo: "Lasanha à Bolonhesa",
+                imagem: "imagens/lasanha.jpg",
+                preparo: "Monte em camadas com molho e queijo. Leve ao forno por 30 minutos.",
+                ingredientes: [
+                    "500g de carne moída",
+                    "1 pacote de massa para lasanha",
+                    "Molho de tomate",
+                    "Queijo mussarela",
+                    "Presunto",
+                    "Sal e temperos a gosto"
+                ]
+            },
+            {
+                titulo: "Salada Caesar",
+                imagem: "imagens/salada.jpg",
+                preparo: "Misture os ingredientes com o molho e sirva gelada.",
+                ingredientes: [
+                    "Alface romana",
+                    "Frango grelhado",
+                    "Croutons",
+                    "Queijo parmesão",
+                    "Molho Caesar"
+                ]
+            }
+        ];
+
+    function ListaIngredientes(receita) {
+      return "<ul>" +
+        receita.ingredientes.map(ing => `<li>${ing}</li>`).reduce((acc, item) => acc + item, "") + "</ul>";
+    }
+    function Card(receita){
+      return `
+      <div class="card" style="width: 250px;">
+        <img src="${receita.imagem}" class="card-img-top" alt="Imagem de ${receita.titulo}">
+        <div class="card-body">
+          <h5 class="cart-title">${receita.titulo}</h5>
+          <div class="card-text">${ListaIngredientes(receita)}
+            <hr>
+            ${receita.preparo}
+          </div>
+        </div>
+      </div>
+      `;
+    }
+
+    function preencheCatalogo() {
+      const painel = document.getElementById('pnlCatalogo');
+      painel.innerHTML = receitas.map(receita => Card(receita)).reduce((acc, cardHTML) => acc + cardHTML, "");
+    }
+  </script>
+</body>
+</html>

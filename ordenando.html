@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ordenação de Números</title>
+</head>
+<body>
+  <h1>Ordenando Números</h1>
+  <input type="number" id="valor" placeholder="Digite um número"/>
+  <hr>
+  <button onclick="add()">Adicionar</button>
+
+  <select id="selecao">
+    <option>Bubble Sort</option>
+    <option>Selection Sort</option>
+    <option>Quick Sort</option>
+  </select>
+
+  <button onclick="ordenar()">Ordenar</button>
+  <button onclick="misturar()">Misturar</button>
+
+  <ul id="valores"></ul>
+
+  <script src="ordenando.js"></script>
+
+  <script>
+    function add(){
+     var cmp = document.getElementById('valor');
+     var list_valores = document.getElementById('valores');
+     var node = document.createElement("li");
+     var node_text = document.createTextNode(cmp.value);
+     node.appendChild(node_text);
+
+     list_valores.appendChild(node);
+    }
+
+    function ordenar(){
+      var order_valores = document.getElementById('valores')
+      var select_valores = document.getElementById('selecao')
+
+      var obter_filhos = Array.from(order_valores.children).map(function(item){
+        return eval(item.innerHTML);
+      });
+
+      switch (select_valores.selectedIndex){
+        case 0:
+          obter_filhos = bubble_sort(obter_filhos);
+          break;
+        case 1:
+          obter_filhos = selection_sort(obter_filhos);
+          break;
+        case 2:
+          obter_filhos = quick_sort(obter_filhos);
+          break;
+      }
+      order_valores.innerHTML = obter_filhos.map(function(valor) {
+        return "<li>" + valor + "</li>";
+      }).reduce(function(acum, item){
+        return acum + item;
+      }, "");
+    }
+
+    function misturar(){
+      lista_valores = document.getElementById('valores');
+      var captura_valores = Array.from(lista_valores.children).map(function(atm){
+        return eval(atm.innerHTML);
+      });
+      captura_valores = shuffle(captura_valores, captura_valores.length * 2);
+      
+      lista_valores.innerHTML = captura_valores.map(function(valor){
+        return "<li>" + valor + "</li>";
+      }).reduce(function(ptm, atm){
+        return ptm + atm;
+      }, "")
+    }
+  </script>
+</body>
+</html>
